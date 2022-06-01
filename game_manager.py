@@ -1,24 +1,4 @@
 ## Copyright Yapudpil pour RCorp™
-game_manager.py
-Qui a accès
-
-Propriétés système
-Type
-Texte
-Taille
-4 Ko
-Espace de stockage utilisé
-4 Ko
-Emplacement
-Code démineur
-Propriétaire
-Yapudpil
-Date de modification
-21:06 par Yapudpil
-Date de création
-21:40
-Ajouter une description
-Téléchargement autorisé pour les lecteurs
 from random import randint
 import global_var as gv
 

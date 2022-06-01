@@ -8,9 +8,9 @@ class Launcher:
     def __init__(self,root):
         self.root = root
         self.frame = self.create_frame()
-        self.rows = IntVar(self.frame, 1)
-        self.cols = IntVar(self.frame, 1)
-        self.diff = StringVar(self.frame, 'Facile')
+        self.rows = IntVar(self.frame, gv.rows)
+        self.cols = IntVar(self.frame, gv.cols)
+        self.diff = StringVar(self.frame, gv.diff)
         self.create_interface()
         self.root.mainloop()
 
@@ -25,7 +25,7 @@ class Launcher:
         button = Button(self.frame, text='Valider', command=self.close_menu)
         button.grid(column=0,row=4, columnspan=2)
 
-        info = Label(self.frame, text = ("A titre indicatif, voici la taille du démineur Google pour chacune des difficultés :\n"
+        info = Label(self.frame, text = ("A titre indicatif, voici la taille du démineur Google pour chacune des difficlutés :\n"
                                          "-Facile : 10 colonnes, 8 lignes\n"
                                          "-Moyen : 18 colonnes, 14 lignes\n"
                                          "-Difficile : 24 colonnes, 20 lignes"))
@@ -43,13 +43,13 @@ class Launcher:
 
     def row_input(self):
         label = Label(self.frame, text='Nombre de lignes :')
-        spin = Spinbox(self.frame, from_=1, to=30, textvariable=self.rows, wrap=True, state='readonly')
+        spin = Spinbox(self.frame, from_=3, to=30, textvariable=self.rows, wrap=True, state='readonly')
         label.grid(column=0, row=1, sticky=W)
         spin.grid(column=1, row=1, sticky=E)
 
     def col_input(self):
         label = Label(self.frame, text='Nombre de colonnes :')
-        spin = Spinbox(self.frame, from_=1, to=30, textvariable=self.cols, wrap=True, state='readonly')
+        spin = Spinbox(self.frame, from_=3, to=30, textvariable=self.cols, wrap=True, state='readonly')
         label.grid(column=0, row=2, sticky=W)
         spin.grid(column=1, row=2, sticky=E)
 

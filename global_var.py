@@ -3,9 +3,9 @@ from tkinter import *
 from tkinter.ttk import *
 import sys
 
-rows = 0
-cols = 0
-diff = ''
+rows = 3
+cols = 3
+diff = 'Facile'
 victory = None
 
 def close_game(root):
@@ -18,6 +18,7 @@ def create_styles(root):
     # Interface style
     s.configure('title.TLabel', font='TkDefaultFont 13 bold')
     s.configure('endMsg.TLabel', font='TkDefaultFont 11')
+    s.configure('error.TLabel', foreground = 'red')
 
     # Grid style
     s.configure('GridLabel.TLabel', relief='solid', borderwidth=1, font='TkDefaultFont 10 bold', anchor=CENTER) # Common attributes

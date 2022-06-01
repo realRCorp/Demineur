@@ -1,20 +1,19 @@
 ## Copyright Yapudpil pour RCorp™
 from tkinter import *
 from tkinter.ttk import *
+from os import path
 
 import global_var as gv
-import launcher
-import display
-import game_front
-import game_manager
-import game_end
+import launcher, display, game_front, game_manager, end_screen
+
+game_path = path.dirname(__file__)
 
 root = Tk()
-root.iconbitmap('assets/logo.ico')
+root.iconbitmap(game_path + '\logo.ico')
+root.protocol("WM_DELETE_WINDOW", lambda: gv.close_game(root))
 root.title('Démineur')
 root.columnconfigure(0,weight=1)
 root.rowconfigure(0,weight=1)
-root.protocol("WM_DELETE_WINDOW", lambda: gv.close_game(root))
 
 gv.create_styles(root)
 
@@ -34,7 +33,7 @@ while True:
 			grid = manager.player_grid
 		else:
 			grid = manager.solution
-		end = game_end.End(root, gv.victory, grid)
+		end = end_screen.End(root, gv.victory, grid)
 		end_display = display.Display(gv.rows, gv.cols, manager=None)
 		end.add_display(end_display)
 		end.start()

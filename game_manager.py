@@ -1,6 +1,32 @@
 ## Copyright Yapudpil pour RCorp™
+game_manager.py
+Qui a accès
+
+Propriétés système
+Type
+Texte
+Taille
+4 Ko
+Espace de stockage utilisé
+4 Ko
+Emplacement
+Code démineur
+Propriétaire
+Yapudpil
+Date de modification
+21:06 par Yapudpil
+Date de création
+21:40
+Ajouter une description
+Téléchargement autorisé pour les lecteurs
 from random import randint
 import global_var as gv
+
+# Conversion between numbers and display:
+#  0 -> " "
+# -1 -> "" (undiscovered)
+# -2 -> "D" (flag)
+# -3 -> "B" (bomb)
 
 class Manager:
 	def __init__(self, game, rows, cols, diff):
@@ -10,6 +36,7 @@ class Manager:
 
 		diff_ref = {'Facile':1/8, 'Moyen':1/6, 'Difficile':1/5}
 		self.bombs = round(self.rows * self.cols * diff_ref[diff])
+		self.safe_undiscovered = (self.rows * self.cols) - self.bombs
 		self.flags = self.bombs
 		game.flags.set(self.flags)
 
@@ -58,10 +85,16 @@ class Manager:
 
 		elif self.player_grid[r][c] == self.solution[r][c]:	# Square is already discovered -> do nothing
 			return
-
+			
 		else:   # Normal square
 			self.player_grid[r][c] = self.solution[r][c]
 			self.game.display.update(self.solution[r][c], r, c)
+			
+			self.safe_undiscovered -= 1
+			if self.safe_undiscovered == 0:
+				gv.victory = True
+				self.game.close_menu()
+				return
 
 			if self.solution[r][c] == 0:  # 0 is discovered -> discover squares around
 				#up
@@ -90,11 +123,8 @@ class Manager:
 		elif self.player_grid[r][c] == -2:  # Flag
 			self.remove_flag(r, c)
 
-		elif self.flags > 0:  # Normal square + remaining flags
+		else:  # Normal square
 			self.put_flag(r, c)
-
-		else:  # No more flags
-			self.game.error_msg.set('Tous les drapeaux ont été placés.')
 
 	def put_flag(self, r, c):
 		self.player_grid[r][c] = -2
@@ -105,9 +135,6 @@ class Manager:
 
 		if self.solution[r][c] == -3:  # If flag on bomb
 			self.bombs -= 1
-			if self.bombs == 0:
-				gv.victory = True
-				self.game.close_menu()
 
 	def remove_flag(self, r, c):
 		self.player_grid[r][c] = -1
